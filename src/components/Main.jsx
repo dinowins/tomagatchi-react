@@ -14,6 +14,7 @@ class Main extends React.Component {
       playLevel: PropTypes.number,
       sleepLevel: PropTypes.number
     };
+    console.log(this.state);
   }
 
   startLevels() {
@@ -25,24 +26,102 @@ class Main extends React.Component {
   check() {
     let that = this;
     setInterval(function() {
-      console.log(that.state);
+      if(that.state.foodLevel == 0 || that.state.playLevel == 0 || that.state.sleepLevel == 0) {
+        clearInterval();
+        console.log("Is Dead");
+      }
     }, 3000);
   }
 
 
+  eat(){
+    console.log(this.state);
+    let newfoodLevel = this.state.foodLevel + 5;
+    this.setState({
+      foodLevel: newfoodLevel
+    });
+    console.log(this.state.foodLevel)
+  }
+
+  sleep() {
+
+  }
+  play() {
+
+  }
+  power() {
+
+  }
 
   render() {
+    let that = this;
     this.startLevels();
     this.check();
+
+    let statsStyle ={
+      zIndex: '-1',
+    }
+
+    let body = {
+      margin: '0 auto',
+      display: 'flex',
+      justifyContent: 'center',
+      // alignItems: 'center'
+    }
+
+    let image = {
+      position: 'absolute',
+      zIndex: '-1',
+      display: 'flex',
+      justifyContent: 'center',
+      // alignItems: 'center',
+    }
+    let ninja = {
+      width: '150px',
+      height: '150px',
+      display: 'flex',
+      justifyContent: 'center',
+      marginLeft: '25px',
+      marginTop: '15px'
+    }
+
+    let main = {
+      width: '200px',
+      height: '300px',
+      margin: '0 auto'
+    }
+
+    let buttons = {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '215px',
+      marginRight: '100px',
+
+    }
+
+    let button = {
+      marginTop: '85px'
+    }
+
+
+
+
     return (
-      <div>
-        <img src={require('../assets/images/Main.png')} alt='' />
-        <h3>{this.state.name}</h3>
-        <p>{this.state.foodLevel}</p>
-        <p>{this.state.playLevel}</p>
-        <p>{this.state.sleepLevel}</p>
-        <Stats state={this.state}/>
-      </div>
+      <div style={main}>
+        <div style={body}>
+          <img src={require('../assets/images/Main.png')} alt='' style={image} />
+          <Stats state={this.state} style={statsStyle}/>
+        </div>
+        <img src={require('../assets/images/ninja.png')} alt='' style={ninja} />
+        <div style={buttons}>
+          <button style={button} onClick={() => {that.eat()}}></button>
+          <button style={button} onClick={that.sleep}></button>
+          <button style={button} onClick={that.play}></button>
+          <button style={button} onClick={that.power}></button>
+
+        </div>
+    </div>
 
     );
   }
